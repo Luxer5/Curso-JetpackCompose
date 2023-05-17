@@ -5,13 +5,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -31,6 +38,40 @@ fun LoginScreen() {
     ) {
         Header(Modifier.align(Alignment.TopEnd))
         Body(Modifier.align(Alignment.Center))
+        Footer(Modifier.align(Alignment.BottomCenter))
+    }
+}
+
+@Composable
+fun Footer(modifier: Modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Divider(
+            Modifier
+                .background(Color(0xFFF9F9F9))
+                .height(1.dp)
+                .fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.size(24.dp))
+        SignUp()
+        Spacer(modifier = Modifier.size(24.dp))
+    }
+}
+
+@Composable
+fun SignUp() {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Text(
+            text = "Dont have an account",
+            fontSize = 12.sp,
+            color = Color(0xFFB5B5B5)
+        )
+        Text(
+            text = "Sign up",
+            Modifier.padding(horizontal = 8.dp),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF4EA8E9)
+        )
     }
 }
 
@@ -64,9 +105,13 @@ fun SocialLogin() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        Image(painter = painterResource(id = R.drawable.fb), contentDescription = "social login fb", modifier = Modifier.size(16.dp))
+        Image(
+            painter = painterResource(id = R.drawable.fb),
+            contentDescription = "social login fb",
+            modifier = Modifier.size(16.dp)
+        )
         Text(
-            text = "Continue as Aris",
+            text = "Continue as Daniel",
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -120,10 +165,36 @@ fun ForgotPassword(modifier: Modifier) {
 
 @Composable
 fun Password(password: String, onTextChange: (String) -> Unit) {
+    var passwordVisibility by remember { mutableStateOf(false) }
     TextField(
         value = password,
         onValueChange = { onTextChange(it) },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = "Password") },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            backgroundColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        trailingIcon = {
+            val imagen = if (passwordVisibility){
+                Icons.Filled.VisibilityOff
+            }else {
+                Icons.Filled.Visibility
+            }
+            IconButton(onClick = { passwordVisibility = ! passwordVisibility }) {
+                Icon(imageVector = imagen, contentDescription = "show password")
+            }
+        },
+        visualTransformation = if (passwordVisibility){
+            VisualTransformation.None
+        }else{
+            PasswordVisualTransformation()
+        }
     )
 }
 
@@ -132,7 +203,17 @@ fun Email(email: String, onTextChange: (String) -> Unit) {
     TextField(
         value = email,
         onValueChange = { onTextChange(it) },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(text = "Email") },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color(0xFFB2B2B2),
+            backgroundColor = Color(0xFFFAFAFA),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
     )
 }
 
