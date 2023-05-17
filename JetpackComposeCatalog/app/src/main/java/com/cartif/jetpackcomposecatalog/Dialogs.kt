@@ -39,10 +39,10 @@ fun MyConfirmationDialog(
                 MyRadiobuttonList(name = status, onItemSelected = {status = it})
                 Divider(Modifier.fillMaxWidth(), Color.LightGray)
                 Row(Modifier.align(Alignment.End).padding(8.dp)) {
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = {onDismiss()}) {
                         Text(text = "Cancel")
                     }
-                    TextButton(onClick = {onDismiss()}) {
+                    TextButton(onClick = {}) {
                         Text(text = "OK")
                     }
                 }
