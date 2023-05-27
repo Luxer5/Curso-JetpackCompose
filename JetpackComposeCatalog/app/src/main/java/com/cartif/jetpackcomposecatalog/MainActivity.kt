@@ -32,6 +32,7 @@ import com.cartif.jetpackcomposecatalog.ui.theme.JetpackComposeCatalogTheme
 import org.intellij.lang.annotations.JdkConstants.CalendarMonth
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,7 +63,10 @@ class MainActivity : ComponentActivity() {
                         }*/
 
                         //SimpleRecyclerView()
-                        SuperHeroGridView()
+                        //SuperHeroGridView()
+                        //SuperHeroWithEspecialControls()
+                        //SuperHeroStickyView()
+                        ScaffoldExample()
 
                     }
                 }
